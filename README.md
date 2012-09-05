@@ -2,6 +2,8 @@
 JSON-datetime allows for proper decoding of datetime values contained in JSON
 streams.
 
+[![Build Status](https://secure.travis-ci.org/nicolaiarocci/json-datetime.png?branch=master)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
+
 ## The problem
 The JSON standard ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) does not
 support datetime types. These are usually represented as strings and Python 
