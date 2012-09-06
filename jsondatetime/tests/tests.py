@@ -35,8 +35,13 @@ class TestBase(TestCase):
         self.assertEqual(decoded.get('born'), self.expected)
         self.assertIn("hookjob", decoded)
 
+    def test_nested_dicts(self):
+        test = '{"updated": {"$gte": "Thu, 1 Mar 2012 10:00:49 UTC"}}'
+        decoded = json.loads(test).get('updated').get('$gte')
+        self.assertIs(type(decoded), datetime.datetime)
+        self.assertEqual(decoded, self.expected)
+
     def hook(self, dct):
         dct["hookjob"] = "I'm hooked!"
-        print dct
         return dct
 
