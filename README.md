@@ -1,8 +1,7 @@
 # JSON-datetime
-[![Build Status](https://secure.travis-ci.org/nicolaiarocci/json-datetime.png?branch=master)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
-
 JSON-datetime allows for proper decoding of datetime values contained in JSON
 streams.
+[![Build Status](https://secure.travis-ci.org/nicolaiarocci/json-datetime.png?branch=master)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
 
 ## The problem
 The JSON standard ([RFC 4627](http://www.ietf.org/rfc/rfc4627.txt)) does not
@@ -29,9 +28,9 @@ method. It decodes datetime values contained in JSON strings:
     >>> json.loads(test)
     {'name': 'John Doe', 'born': datetime.datetime(2012, 3, 1, 10, 0 ,49)}
 ```
-Strings must match a valid `strptime()` datetime format in order to
-be decoded to datetime values. In the example above since the optional
-`datetime_format` argument is missing, the default format (`'%a, %d %b %Y
+Strings must match a valid `strptime()` datetime format in order to be decoded
+to datetime values. In the example above since the optional `datetime_format`
+argument is missing, the default RFC1123 format (`'%a, %d %b %Y
 %H:%M:%S UTC'`) is used. In the following example we are using a custom format:
 ```python
     import jsondatetime as json
