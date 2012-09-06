@@ -1,6 +1,7 @@
 # JSON-datetime
 JSON-datetime allows for proper decoding of datetime values contained in JSON
 streams.
+
 [![Build Status](https://secure.travis-ci.org/nicolaiarocci/json-datetime.png?branch=master)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
 
 ## The problem
@@ -44,3 +45,6 @@ argument is missing, the default RFC1123 format (`'%a, %d %b %Y
 Being just a wrapper around the `loads` method, you can still use all the standard
 `loads` arguments, `object_hook` included. This means that you can still
 perform custom parsing of your inbound JSON stream.
+
+## Installation
+`pip install json-datetime`
