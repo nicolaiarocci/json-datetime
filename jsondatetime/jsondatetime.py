@@ -14,7 +14,10 @@ def loads(s, **kwargs):
 def iteritems(source, format):
 
     for k, v in source.items():
-        if isinstance(v, dict):
+        if isinstance(v, list):
+            for a in v:
+                iteritems(a, format)
+        elif isinstance(v, dict):
             iteritems(v, format)
         elif isinstance(v, basestring):
             try:
