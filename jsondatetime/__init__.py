@@ -1,1 +1,1 @@
-from jsondatetime import loads
+from jsondatetime import loads, dumps
