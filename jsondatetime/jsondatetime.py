@@ -1,4 +1,3 @@
-__author__ = 'jwestove'
 import json
 import datetime
 import dateutil.parser
