@@ -25,8 +25,7 @@ class TestBase(TestCase):
     def test_date_format(self):
         test = '{"born": "Thu, 1 Mar 2012"}'
         expected = datetime.datetime(2012, 3, 1)
-        format = '%a, %d %b %Y'
-        decoded = json.loads(test, datetime_format=format).get('born')
+        decoded = json.loads(test).get('born')
         self.assertIs(type(decoded), datetime.datetime)
         self.assertEqual(decoded, expected)
 
