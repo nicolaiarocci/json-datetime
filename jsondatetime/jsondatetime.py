@@ -28,16 +28,16 @@ def loads(s, **kwargs):
 
     source = json.loads(s, **kwargs)
 
-    return iteritems(source, format)
+    return iteritems(source)
 
-def iteritems(source, format):
+def iteritems(source):
 
     for k, v in source.items():
         if isinstance(v, list):
             for a in v:
-                iteritems(a, format)
+                iteritems(a)
         elif isinstance(v, dict):
-            iteritems(v, format)
+            iteritems(v)
         elif isinstance(v, basestring):
             try:
                 source[k] = dateutil.parser.parse(v, ignoretz=True)
