@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 DESCRIPTION = ("Allows for proper decoding of datetime values contained in "
                "JSON streams")
-LONG_DESCRIPTION = open('README.md').read()
+LONG_DESCRIPTION = open('README.rst').read()
 
 setup(
       name='JSON-Datetime',
