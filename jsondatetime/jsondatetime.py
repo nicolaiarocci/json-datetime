@@ -2,6 +2,11 @@ import json
 import datetime
 import dateutil.parser
 
+try:
+    string_types = basestring  # Python 2
+except NameError:
+    string_types = str  # Python 3
+
 DEFAULT_DATE_FORMAT = '%a, %d %b %Y %H:%M:%S UTC'
 DEFAULT_ARGUMENT = "datetime_format"
 
@@ -38,7 +43,7 @@ def iteritems(source):
                 iteritems(a)
         elif isinstance(v, dict):
             iteritems(v)
-        elif isinstance(v, basestring):
+        elif isinstance(v, string_types):
             try:
                 source[k] = dateutil.parser.parse(v, ignoretz=True)
             except:

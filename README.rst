@@ -34,7 +34,7 @@ method. It decodes datetime values contained in JSON strings:
     >>> json.loads(test)
     {'name': 'John Doe', 'born': datetime.datetime(2012, 3, 1, 10, 0 ,49)}
 
-Strings are parsed using ``datetime.parser.parse`` which is fairly flexible for
+Strings are parsed using ``dateutil.parser.parse`` which is fairly flexible for
 common datetime formats
 
 Custom parsing
