@@ -18,6 +18,7 @@ decoders end up decoding them as such. Consider the following example:
 
     >>> test = '{"name": "John Doe", "born": "Thu, 1 Mar 2012 10:00:49 UTC"}'
     >>> json.loads(test)
+    {'born': u'Thu, 1 Mar 2012 10:00:49 UTC', 'name': u'John Doe'}
 
 As you can see, in the resulting dictionary ``born`` is still a string.
 
