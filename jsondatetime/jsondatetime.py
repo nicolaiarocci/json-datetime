@@ -11,10 +11,15 @@ except NameError:
 
 
 class DatetimeJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, (datetime.date, datetime.datetime)):
-            return obj.isoformat()
-        super(DatetimeJSONEncoder, self).default(obj)
+    def __init__(self, **kwargs):
+        super(DatetimeJSONEncoder, self).__init__(**kwargs)
+        if kwargs.get("default") is not None:
+            self.default = kwargs.get("default")
+
+    def default(self, o):  # (pylint bug 414) pylint: disable=method-hidden
+        if isinstance(o, (datetime.date, datetime.datetime)):
+            return o.isoformat()
+        return super(DatetimeJSONEncoder, self).default(o)
 
 
 dumps = functools.partial(json.dumps, cls=DatetimeJSONEncoder)
@@ -35,7 +40,7 @@ def iteritems(source):
         elif isinstance(v, string_types):
             try:
                 source[k] = dateutil.parser.parse(v)
-            except:
+            except (ValueError, OverflowError):
                 pass
 
     return source
