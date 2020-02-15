@@ -1,10 +1,9 @@
 import datetime
 import unittest
 
+import jsondatetime as json
 from dateutil.tz import tzutc
 from parameterized import param, parameterized
-
-import jsondatetime as json
 
 
 class TestBase(unittest.TestCase):
@@ -21,14 +20,14 @@ class TestBase(unittest.TestCase):
 
     @parameterized.expand(
         [
+            param('{"key": "value"}', {"key": "value"}),
             param(
-                '{"name": "John Doe", "born": "2012-03-01T10:00:49+00:00"}',
+                '{"born": "2012-03-01T10:00:49+00:00", "name": "John Doe"}',
                 {
-                    "name": "John Doe",
                     "born": datetime.datetime(2012, 3, 1, 10, 0, 49, tzinfo=tzutc()),
+                    "name": "John Doe",
                 },
             ),
-            param('{"key": "value"}', {"key": "value"}),
             param(
                 '{"parent": {"date": "2020-02-20T02:20:02+00:00"}}',
                 {
@@ -45,7 +44,7 @@ class TestBase(unittest.TestCase):
         except Exception as e:
             self.fail("Unexpected failire: %s" % e)
         self.assertEqual(decoded, python)
-        back_again = json.dumps(python)
+        back_again = json.dumps(python, sort_keys=True)
         self.assertEqual(back_again, json_str)
 
     def test_object_hook(self):
