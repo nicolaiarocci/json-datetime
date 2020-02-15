@@ -1,0 +1,6 @@
+black == 19.10b0
+pylint
+pytest
+flake8
+codecov
+pytest-cov
