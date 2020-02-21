@@ -1,6 +1,17 @@
 language: python
-python: [2.7, 3.7, 3.8]
+python:
+- 2.7
+- 3.7
+- 3.8
 install: script/install.sh
 script: script/test.sh
 after_success:
-  - codecov
+- codecov
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: LvxrgMTSjHHPkCFQJ4qYHl07mL1mpK0xg14e6sK6c59LCafTAOcETBS5soEnakMKFfSiwYuLFqgkNRySdkHaGQ2si97on+e3vpIhWRG3KKRtAfJSftCG6GwDQTN8Ksm2TqsMwizsSbOHp1Zhv/VwTBNkW1+HzK7nbcnMNfhU160M9MorAKnM6x9PkUVzvrr9veB2G4Y/LBxrl8/xYrj+U6Zto7yKoFwp1vbr9E8WkW5gooWOH+OGwDnbPzSqSVZknK9KUFABIJQmccrb8bSeKd3mcf1GSezx68vv6wZs4moltCLDaTbSmHbOGEBhs+2NVlTJejLOtFMdaFtZ/4V0X6LydIksvKmrYd3SS5MlPG1Bx8KSm0kZaccfzsPP0QxPrV7mirHcisdBHKEx7CxFAwf8En0TaXCwE4mHk8LJVBe4DA+itaacP3mIEBGhdJ0iJpoq7o8FTqvVU2S3slHrfEwjhmMSYzSt2NeBWmAHWQN9LwlCs3ntOADZcqr3vsCXNSO1Qa1SiU3BVxf/ph9gp6AvNAXF0miROaGFRF1GqmfNcwIfd3ltqBAnoC4DwFA8rFR5cbxtWoflAPguctheLy46eE5/+TYXsiITVNcJQsiK/m2kJT/Jghgeekt7IiL96lh1l9i2i+1JYpNMK6Lsr5KeojM5wyBP9IN+l6ZR3Bk=
+  on:
+    branch: master
+  skip_existing: true
