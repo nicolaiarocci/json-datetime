@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
+from io import open  # Python 2 compatibility
 from os import path
 
 from setuptools import find_packages, setup
 
 description = (
-    "Allows for encoding and decoding of datetime values contained in JSON streams"
+    "Allows for encoding and decoding of datetime values contained in JSON streams."
 )
 
 this_directory = path.abspath(path.dirname(__file__))
