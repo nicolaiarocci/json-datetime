@@ -11,9 +11,9 @@ after_success:
 jobs:
   include:
     - stage: deploy
+      python: 3.8
       script: skip
       deploy:
-        python: 3.8
         provider: pypi
         user: __token__
         password:
