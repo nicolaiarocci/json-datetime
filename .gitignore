@@ -40,3 +40,4 @@ Scripts
 
 #Pycharm
 .idea
+/coverage.xml

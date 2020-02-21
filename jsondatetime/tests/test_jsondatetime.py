@@ -1,14 +1,15 @@
-from unittest import TestCase
+import datetime
+import unittest
 
 import jsondatetime as json
-import datetime
+from dateutil.tz import tzutc
+from parameterized import param, parameterized
 
-class TestBase(TestCase):
 
+class TestBase(unittest.TestCase):
     def setUp(self):
         self.test = '{"name": "John Doe", "born": "Thu, 1 Mar 2012 10:00:49 UTC"}'
-        self.expected = datetime.datetime(2012, 3, 1, 10, 0 ,49)
-        self.datetime_format = '%a, %d %b %Y %H:%M:%S UTC'
+        self.expected = datetime.datetime(2012, 3, 1, 10, 0, 49)
 
     def test_no_dates(self):
         test = '{"name": "John Doe"}'
@@ -17,30 +18,50 @@ class TestBase(TestCase):
         except Exception as e:
             self.fail("Unexpected failure: %s" % e)
 
-    def test_default_date_format(self):
-        decoded = json.loads(self.test).get('born')
-        self.assertIs(type(decoded), datetime.datetime)
-        self.assertEqual(decoded, self.expected)
-
-    def test_date_format(self):
-        test = '{"born": "Thu, 1 Mar 2012"}'
-        expected = datetime.datetime(2012, 3, 1)
-        decoded = json.loads(test).get('born')
-        self.assertIs(type(decoded), datetime.datetime)
-        self.assertEqual(decoded, expected)
+    @parameterized.expand(
+        [
+            param('{"key": "value"}', {"key": "value"}),
+            param(
+                '{"born": "2012-03-01T10:00:49+00:00", "name": "John Doe"}',
+                {
+                    "born": datetime.datetime(2012, 3, 1, 10, 0, 49, tzinfo=tzutc()),
+                    "name": "John Doe",
+                },
+            ),
+            param(
+                '{"parent": {"date": "2020-02-20T02:20:02+00:00"}}',
+                {
+                    "parent": {
+                        "date": datetime.datetime(2020, 2, 20, 2, 20, 2, tzinfo=tzutc())
+                    }
+                },
+            ),
+        ]
+    )
+    def test_equivalence(self, json_str, python):
+        try:
+            decoded = json.loads(json_str)
+        except Exception as e:
+            self.fail("Unexpected failire: %s" % e)
+        self.assertEqual(decoded, python)
+        back_again = json.dumps(python, sort_keys=True)
+        self.assertEqual(back_again, json_str)
 
     def test_object_hook(self):
-        decoded = json.loads(self.test, object_hook=self.hook)
-        self.assertEqual(decoded.get('born'), self.expected)
+        def hook(dct):
+            dct["hookjob"] = "I'm hooked!"
+            return dct
+
+        decoded = json.loads(
+            '{"name": "John Doe", "born": "Thu, 1 Mar 2012 10:00:49 UTC"}',
+            object_hook=hook,
+        )
+        self.assertEqual(
+            decoded.get("born"),
+            datetime.datetime(2012, 3, 1, 10, 0, 49, tzinfo=tzutc()),
+        )
         self.assertIn("hookjob", decoded)
 
-    def test_nested_dicts(self):
-        test = '{"updated": {"$gte": "Thu, 1 Mar 2012 10:00:49 UTC"}}'
-        decoded = json.loads(test).get('updated').get('$gte')
-        self.assertIs(type(decoded), datetime.datetime)
-        self.assertEqual(decoded, self.expected)
 
-    def hook(self, dct):
-        dct["hookjob"] = "I'm hooked!"
-        return dct
-
+if __name__ == "__main__":
+    unittest.main()
