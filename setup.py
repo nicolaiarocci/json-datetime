@@ -2,24 +2,28 @@
 
 from setuptools import setup, find_packages
 
-DESCRIPTION = ("Allows for proper decoding of datetime values contained in "
-               "JSON streams")
+DESCRIPTION = ("Allows for encoding and decoding of datetime values "
+        "contained in JSON streams")
 LONG_DESCRIPTION = open('README.rst').read()
 
 setup(
-    name='JSON-Datetime',
-    version='0.0.5',
+    name='jsondatetime',
+    version='0.1.0',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    author='Nicola Iarocci',
-    author_email='nicola@nicolaiarocci.com',
-    url='http://github.com/nicolaiarocci/json-datetime',
+    # Forked.
+    #  Original author='Nicola Iarocci',
+    #  Original author_email='nicola@nicolaiarocci.com',
+    #  Original url='http://github.com/nicolaiarocci/json-datetime',
+    author='Andrew Stribblehill',
+    author_email='andrew.stribblehill@schibsted.com',
+    url='https://github.com/schibsted/json-datetime',
     license=open('LICENSE').read(),
     platforms=["any"],
     packages=find_packages(),
     test_suite="jsondatetime.tests",
-    requires=['simplejson'],
-    install_requires=['simplejson'],
+    requires=['simplejson;python_version<"2.7"'],
+    install_requires=['simplejson;python_version<"2.7"'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
