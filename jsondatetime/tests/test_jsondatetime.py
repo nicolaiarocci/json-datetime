@@ -40,6 +40,18 @@ class TestBase(TestCase):
         self.assertIs(type(decoded), datetime.datetime)
         self.assertEqual(decoded, self.expected)
 
+    def test_numeric_value(self):
+        decoded = json.loads('{"key": "2"}')
+        self.assertEqual(decoded.get('key'), "2")
+
+    def test_float_value(self):
+        decoded = json.loads('{"key": "2.5"}')
+        self.assertEqual(decoded.get('key'), "2.5")
+
+    def test_json_dumps(self):
+        json.dumps({"x": 1})
+
+
     def hook(self, dct):
         dct["hookjob"] = "I'm hooked!"
         return dct

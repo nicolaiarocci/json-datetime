@@ -1,3 +1,4 @@
+import sys
 import json
 import datetime
 import dateutil.parser
@@ -9,6 +10,8 @@ except NameError:
 
 DEFAULT_DATE_FORMAT = '%a, %d %b %Y %H:%M:%S UTC'
 DEFAULT_ARGUMENT = "datetime_format"
+PY2 = sys.version_info[0] == 2
+
 
 class DatetimeJSONEncoder(json.JSONEncoder):
 
@@ -16,24 +19,28 @@ class DatetimeJSONEncoder(json.JSONEncoder):
         if isinstance(obj, datetime.datetime) or isinstance(obj, datetime.date):
             return obj.isoformat()
         else:
-            return json.JSONEncoder.default(obj)
+            return json.JSONEncoder().default(obj)
 
-json._default_encoder = DatetimeJSONEncoder
+
+json._default_encoder = DatetimeJSONEncoder()
 
 
 def dumps(obj, skipkeys=False, ensure_ascii=True, check_circular=True,
           allow_nan=True, cls=None, indent=None, separators=None,
           encoding='utf-8', default=None, sort_keys=False, **kw):
+    if PY2:
+        kw.update({"encoding": encoding})
     return json.dumps(obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
                       check_circular=check_circular, allow_nan=allow_nan,
-                      cls=cls, indent=indent, separators=None, encoding=encoding,
+                      cls=cls, indent=indent, separators=separators,
                       default=default, sort_keys=sort_keys, **kw)
 
-def loads(s, **kwargs):
 
+def loads(s, **kwargs):
     source = json.loads(s, **kwargs)
 
     return iteritems(source)
+
 
 def iteritems(source):
 
@@ -43,10 +50,15 @@ def iteritems(source):
                 iteritems(a)
         elif isinstance(v, dict):
             iteritems(v)
-        elif isinstance(v, string_types):
+        elif isinstance(v, string_types) and not v.isdigit():
+            try:
+                float(v)
+                continue
+            except ValueError:
+                pass
             try:
                 source[k] = dateutil.parser.parse(v, ignoretz=True)
-            except:
+            except (ValueError, OverflowError):
                 pass
 
     return source
