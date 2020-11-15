@@ -14,7 +14,7 @@ setup(
     author='Nicola Iarocci',
     author_email='nicola@nicolaiarocci.com',
     url='http://github.com/nicolaiarocci/json-datetime',
-    license=open('LICENSE').read(),
+    license='ISC',
     platforms=["any"],
     packages=find_packages(),
     test_suite="jsondatetime.tests",
