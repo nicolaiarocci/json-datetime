@@ -1,5 +1,5 @@
 import sys
-import json
+import simplejson as json
 import datetime
 import dateutil.parser
 
