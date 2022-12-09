@@ -46,4 +46,4 @@ still perform custom parsing of your inbound JSON stream.
 
 Installation
 ------------
-``pip install json-datetime``
+``pip install JSON-Datetime``
